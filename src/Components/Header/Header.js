@@ -1,12 +1,27 @@
-import React from 'react';
+import React,{useContext} from 'react';
+import { getAuth, signOut } from "firebase/auth";
 
 import './Header.css';
+import {useHistory} from 'react-router-dom';
 import OlxLogo from '../../assets/OlxLogo';
 import Search from '../../assets/Search';
 import Arrow from '../../assets/Arrow';
 import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
+import { AuthContext } from '../../store/Context';
+import app from '../../firebase/config'
 function Header() {
+  const {user} = useContext(AuthContext)
+  const history = useHistory()
+const logoutFUnction = ()=>{
+const auth = getAuth(app);
+signOut(auth).then(() => {
+  // Sign-out successful.
+}).catch((error) => {
+  // An error happened.
+});
+  }
+
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
@@ -34,11 +49,16 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="loginPage">
-          <span>Login</span>
+          <span onClick={()=>{ history.push('/login')}}>{user  ? user.username : 'Login'}</span>
+          
+          
+      
           <hr />
+          
         </div>
+        <span onClick={logoutFUnction}>{user ? 'logout' : ''}</span>
 
-        <div className="sellMenu">
+        <div className="sellMenu" onClick={(e)=>{user ? history.push('/create') : history.push('/login')}}>
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>

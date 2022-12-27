@@ -1,12 +1,12 @@
 import React from 'react';
 
 import './View.css';
-function View() {
+function  View() {
   return (
     <div className="viewParentDiv">
       <div className="imageShowDiv">
         <img
-          src="../../../Images/R15V3.jpg"
+          src=""
           alt=""
         />
       </div>
